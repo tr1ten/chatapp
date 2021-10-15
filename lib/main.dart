@@ -1,5 +1,9 @@
 import 'package:chatapp/screens/authScreen.dart';
 import 'package:chatapp/screens/chatScreen.dart';
+import 'package:chatapp/screens/messageScreen.dart';
+import 'package:chatapp/screens/personalChatScreen.dart';
+import 'package:chatapp/screens/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,11 +31,18 @@ class MyApp extends StatelessWidget {
         // initialData: initialData,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if(snapshot.hasData){
-          return ChatScreen();
+          return MessageScreen();
           }
           return AuthScreen();
         },
       ),
+      routes:{ '/chatScreen': (context) => ChatScreen(),
+      '/messageScreen': (context) => MessageScreen(),
+      '/personalChatScreen': (context) => PersonalChatScreen(),
+      '/profileScreen': (context) => ProfileView(),
+
+
+      }
     );
   }
 }

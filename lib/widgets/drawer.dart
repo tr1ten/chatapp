@@ -17,17 +17,28 @@ class Drawermenu extends StatelessWidget {
           ),
         ListTile(title: Text("Profile"),
         // contentPadding: EdgeInsets.all(10),
-        onTap: ()=>{},
+        onTap: ()=>{
+          Navigator.of(context).pushReplacementNamed('/profileScreen')
+
+        },
         ),
         Divider(thickness: 2,),
         ListTile(title: Text("Chat room"),
-        onTap: ()=>{},
+        onTap: ()=>{
+          Navigator.of(context).pushReplacementNamed('/chatScreen')
+        },
         // contentPadding: EdgeInsets.all(10),
+        ),
+        Divider(thickness: 2,),
+        ListTile(title: Text("Messages"),
+        onTap: ()=>{
+          Navigator.of(context).pushReplacementNamed('/messageScreen')
+
+        },
         ),
         Divider(thickness: 2,),
         ListTile(title: Text("Settings"),
         onTap: ()=>{},
-        // contentPadding: EdgeInsets.all(10),
         ),
         Divider(thickness: 2,),
         ListTile(title: Text("Log out"),
