@@ -2,24 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class NewMessage extends StatefulWidget {
+class PNewMessage extends StatefulWidget {
+  final QueryDocumentSnapshot<Object?> userdoc;
+
+  const PNewMessage({Key? key, required this.userdoc}) : super(key: key);
   @override
-  _NewMessageState createState() => _NewMessageState();
+  _PNewMessageState createState() => _PNewMessageState();
 }
 
-class _NewMessageState extends State<NewMessage> {
+class _PNewMessageState extends State<PNewMessage> {
   var _controller = new TextEditingController();
   String _enteredMessage = '';
-  void _sendmessage() async{
+  void _sendmessage() async {
     FocusScope.of(context).unfocus();
     final user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
     FirebaseFirestore.instance.collection('personalChats').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
-      'userId' : user.uid,
-      'username' : userData['username'],
-      'image' : userData['imageUrl']
+      'fromId': user.uid,
+      'toId': this.widget.userdoc.id
     });
     _controller.clear();
   }
@@ -47,7 +52,10 @@ class _NewMessageState extends State<NewMessage> {
           )),
           IconButton(
             onPressed: _enteredMessage.trim().isEmpty ? null : _sendmessage,
-            icon: Icon(Icons.send, color: Colors.blue,),
+            icon: Icon(
+              Icons.send,
+              color: Colors.blue,
+            ),
           ),
         ],
       ),
