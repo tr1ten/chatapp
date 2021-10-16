@@ -15,7 +15,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
-  // void initState() { 
+  // void initState() {
   //   final fbm = FirebaseMessaging.instance;
   //   fbm.requestPermission();
   //   FirebaseMessaging.onMessage.listen((event) {
@@ -32,43 +32,49 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: Text('ChatApp'),
-      actions: [
-        DropdownButton(
-        icon: Icon(Icons.more_vert, color: Colors.black,),  
-        items: [
-          DropdownMenuItem(child: Container(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.exit_to_app),
-                    SizedBox(width: 5),
-                    Text('Logout'),
-                  ],
-                ),
-              ],
+        actions: [
+          DropdownButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.black,
             ),
-          ),
-          value: 'logout',
+            items: [
+              DropdownMenuItem(
+                child: Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.exit_to_app),
+                          SizedBox(width: 5),
+                          Text('Logout'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                value: 'logout',
+              ),
+            ],
+            onChanged: (itemIdentifier) {
+              if (itemIdentifier == 'logout') {
+                FirebaseAuth.instance.signOut();
+                print('successfully logout from chatscreen!');
+              }
+            },
           ),
         ],
-        onChanged: (itemIdentifier){
-          if(itemIdentifier == 'logout'){
-            FirebaseAuth.instance.signOut();
-          }
-        },
-       ),
-      ],
       ),
       body: Container(
         child: Column(
           children: [
-            Expanded(child: Messages(),
+            Expanded(
+              child: Messages(),
             ),
             NewMessage(),
           ],
         ),
-      ), 
+      ),
     );
   }
 }

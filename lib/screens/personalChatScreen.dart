@@ -1,7 +1,12 @@
-import 'package:chatapp/widgets/newMessage.dart';
+import 'package:chatapp/widgets/personalmessages.dart';
+import 'package:chatapp/widgets/sendPersonalMessage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PersonalChatScreen extends StatelessWidget {
+  final QueryDocumentSnapshot<Object?> user;
+  const PersonalChatScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,16 +14,22 @@ class PersonalChatScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         leading: BackButton(
-          onPressed: () => Navigator.of(context).pushReplacementNamed('/messageScreen'),
+          onPressed: () =>
+              Navigator.of(context).pushReplacementNamed('/messageScreen'),
         ),
-        title: Text('UserName'),
+        title: Text(user.get('username')),
       ),
       body: Container(
         child: Column(
           children: [
-            Expanded(child: Container(),
+            Expanded(
+              child: PMessages(
+                toUser: user,
+              ),
             ),
-            NewMessage(),
+            PNewMessage(
+              userdoc: user,
+            ),
           ],
         ),
       ),
