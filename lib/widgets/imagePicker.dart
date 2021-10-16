@@ -12,20 +12,19 @@ class ImagePick extends StatefulWidget {
 }
 
 class _ImagePickState extends State<ImagePick> {
-
   File? _myImage;
-  
-  void _pickImage() async{
+
+  void _pickImage() async {
     final ImagePicker _picker = ImagePicker();
-    final image = await _picker.pickImage(source: ImageSource.gallery,
-    maxWidth: 600
-    );
+    final image =
+        await _picker.pickImage(source: ImageSource.gallery, maxWidth: 600);
     widget.imagepickfn(File(image!.path));
-    if(image == null){
+    // ignore: unnecessary_null_comparison
+    if (image == null) {
       return;
     }
     setState(() {
-      _myImage =  File(image.path);
+      _myImage = File(image.path);
     });
   }
 
@@ -35,7 +34,7 @@ class _ImagePickState extends State<ImagePick> {
       children: [
         CircleAvatar(
           radius: 45,
-          backgroundImage: _myImage != null? FileImage(_myImage!) : null,
+          backgroundImage: _myImage != null ? FileImage(_myImage!) : null,
         ),
         TextButton.icon(
           onPressed: _pickImage,
