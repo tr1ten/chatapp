@@ -25,7 +25,7 @@ class Drawermenu extends StatelessWidget {
         Divider(thickness: 2,),
         ListTile(title: Text("Chat room"),
         onTap: ()=>{
-          Navigator.of(context).pushReplacementNamed('/chatScreen')
+          Navigator.of(context).pushNamed('/chatScreen')
         },
         // contentPadding: EdgeInsets.all(10),
         ),
@@ -42,13 +42,15 @@ class Drawermenu extends StatelessWidget {
         ),
         Divider(thickness: 2,),
         ListTile(title: Text("Log out"),
-        onTap: ()=>{
-            FirebaseAuth.instance.signOut()
-        },
+        onTap: _signOut,
         // contentPadding: EdgeInsets.all(10),
         ),
         // Divider(thickness: 2,),        
       ]),
     );
   }
+}
+
+Future<void> _signOut() async {
+  await FirebaseAuth.instance.signOut();
 }

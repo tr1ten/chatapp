@@ -19,27 +19,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        // initialData: initialData,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return MaterialApp(
+        home: snapshot.hasData ? MessageScreen() : AuthScreen(),
       debugShowCheckedModeBanner: false,
       title: 'ChatApp',
       theme: ThemeData(
         primarySwatch: Colors.cyan,
         // backgroundColor: 
       ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        // initialData: initialData,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if(snapshot.hasData){
-          return MessageScreen();
-          }
-          return AuthScreen();
-        },
-      ),
       routes:{ '/chatScreen': (context) => ChatScreen(),
       '/messageScreen': (context) => MessageScreen(),
       '/personalChatScreen': (context) => PersonalChatScreen(),
-      '/profileScreen': (context) => ProfileView(),
+      '/profileScreen': (context) => ProfilePage(),
+      }
+      );
 
 
       }
