@@ -12,17 +12,16 @@ class AuthService {
       stream: _auth.authStateChanges(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
-          print("Your data: ${snapshot}");
+          print("Your data: $snapshot");
           print('1234688987');
           return ChatScreen();
         } else
           // user not authorized hence redirect to login page
           print('logged out');
-          return AuthScreen();
+        return AuthScreen();
       },
     );
   }
-
 
   // signout()
   signOut() {
@@ -32,7 +31,7 @@ class AuthService {
   // Logout
   Future logOut(BuildContext context) async {
     try {
-       await _auth.signOut().then((value) {
+      await _auth.signOut().then((value) {
         AuthService().handleAuthState();
       });
     } catch (e) {

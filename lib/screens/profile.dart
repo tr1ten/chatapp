@@ -1,5 +1,4 @@
 import 'package:chatapp/widgets/drawer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +9,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-    //   Future<void> _getUserDetail() async {
-    // final user = FirebaseAuth.instance.currentUser;
-    // final userData = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();    
-    //   }
+  //   Future<void> _getUserDetail() async {
+  // final user = FirebaseAuth.instance.currentUser;
+  // final userData = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+  //   }
 
   final userDetail = FirebaseAuth.instance.currentUser;
 
@@ -76,27 +74,31 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-            const SizedBox(height: 15),
-            ListTile(leading: Text('College:', style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
+          const SizedBox(height: 15),
+          ListTile(
+            leading: Text(
+              'College:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
             title: Text('College name'),
-            ),
-
+          ),
           Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'About',
-              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'About',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  'Hello My name is .......',
+                  style: TextStyle(
+                      fontSize: 16, height: 1.2, color: Colors.black87),
+                ),
+              ],
             ),
-            Text(
-              'Hello My name is .......',
-              style: TextStyle(fontSize: 16, height: 1.2, color: Colors.black87),
-            ),
-          ],
-        ),
-      )
+          )
         ],
       ),
     );
