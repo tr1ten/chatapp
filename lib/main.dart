@@ -2,7 +2,6 @@ import 'package:chatapp/screens/authScreen.dart';
 import 'package:chatapp/screens/chatScreen.dart';
 import 'package:chatapp/screens/editProfileScreen.dart';
 import 'package:chatapp/screens/messageScreen.dart';
-// import 'package:chatapp/screens/personalChatScreen.dart';
 import 'package:chatapp/screens/profile.dart';
 import 'package:chatapp/utils/authService.dart';
 import 'package:chatapp/widgets/tabbar.dart';

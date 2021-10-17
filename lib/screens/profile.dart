@@ -9,7 +9,7 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> 
 
   final userDetail = FirebaseAuth.instance.currentUser;
 
@@ -98,6 +98,33 @@ class _ProfilePageState extends State<ProfilePage> {
           )
             ],
           ),
+          const SizedBox(height: 15),
+          ListTile(
+            leading: Text(
+              'College:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
+            title: Text('College name'),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'About',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  'Hello My name is .......',
+                  style: TextStyle(
+                      fontSize: 16, height: 1.2, color: Colors.black87),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
         );
         }else return AuthScreen();
       }

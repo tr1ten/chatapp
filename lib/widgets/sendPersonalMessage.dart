@@ -16,14 +16,10 @@ class _PNewMessageState extends State<PNewMessage> {
   void _sendmessage() async {
     FocusScope.of(context).unfocus();
     final user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
     FirebaseFirestore.instance.collection('personalChats').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
-      'fromId': user.uid,
+      'fromId': user!.uid,
       'toId': this.widget.userdoc.id
     });
     _controller.clear();

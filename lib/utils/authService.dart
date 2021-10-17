@@ -25,7 +25,6 @@ class AuthService {
     );
   }
 
-
   // signout()
   signOut() {
     _auth.signOut();
@@ -34,6 +33,9 @@ class AuthService {
   // Logout
   Future logOut(BuildContext context) async {
     try {
+      await _auth.signOut().then((value) {
+        AuthService().handleAuthState();
+      });
        await _auth.signOut().then((value) =>
         AuthService().handleAuthState()
       );

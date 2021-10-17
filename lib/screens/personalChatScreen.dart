@@ -1,7 +1,6 @@
 import 'package:chatapp/widgets/personalmessages.dart';
 import 'package:chatapp/widgets/sendPersonalMessage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PersonalChatScreen extends StatelessWidget {
