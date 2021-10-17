@@ -1,10 +1,15 @@
-import 'package:chatapp/utils/authService.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Drawermenu extends StatelessWidget {
+class Drawermenu extends StatefulWidget {
+  @override
+  _DrawermenuState createState() => _DrawermenuState();
+}
+
+class _DrawermenuState extends State<Drawermenu> {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return Drawer(  
       child: ListView(padding: EdgeInsets.zero, children: [
         DrawerHeader(
             decoration: BoxDecoration(
@@ -15,7 +20,7 @@ class Drawermenu extends StatelessWidget {
           title: Text("Profile"),
           // contentPadding: EdgeInsets.all(10),
           onTap: () =>
-              {Navigator.of(context).pushNamed('/profileScreen')},
+              {Navigator.of(context).pushReplacementNamed('/profileScreen')},
         ),
         Divider(
           thickness: 2,
@@ -33,7 +38,6 @@ class Drawermenu extends StatelessWidget {
           title: Text("Messages"),
           onTap: () => 
             Navigator.of(context).pushReplacementNamed('/tabsScreen')
-          ,
         ),
         Divider(
           thickness: 2,
@@ -47,7 +51,10 @@ class Drawermenu extends StatelessWidget {
         ),
         ListTile(
           title: Text("Log out"),
-          onTap: () => AuthService().logOut(context),
+          onTap: () => {
+            Navigator.of(context).pop(),
+            FirebaseAuth.instance.signOut()
+          }
           // contentPadding: EdgeInsets.all(10),
         ),
         // Divider(thickness: 2,),
