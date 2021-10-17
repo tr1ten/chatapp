@@ -8,17 +8,19 @@ class AuthService {
 
   //Determine if the user is authenticated and redirect accordingly
   handleAuthState() {
-    return StreamBuilder(
+    return 
+     StreamBuilder(
       stream: _auth.authStateChanges(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
           print("Your data: $snapshot");
           print('1234688987');
           return ChatScreen();
-        } else
-          // user not authorized hence redirect to login page
+        } 
+        else
           print('logged out');
-        return AuthScreen();
+          return AuthScreen();
+          
       },
     );
   }
@@ -34,6 +36,9 @@ class AuthService {
       await _auth.signOut().then((value) {
         AuthService().handleAuthState();
       });
+       await _auth.signOut().then((value) =>
+        AuthService().handleAuthState()
+      );
     } catch (e) {
       print(e);
     }

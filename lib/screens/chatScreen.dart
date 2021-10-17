@@ -1,3 +1,4 @@
+import 'package:chatapp/screens/authScreen.dart';
 import 'package:chatapp/widgets/drawer.dart';
 import 'package:chatapp/widgets/messages.dart';
 import 'package:chatapp/widgets/newMessage.dart';
@@ -14,66 +15,33 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
-  // void initState() {
-  //   final fbm = FirebaseMessaging.instance;
-  //   fbm.requestPermission();
-  //   FirebaseMessaging.onMessage.listen((event) {
-  //     print(event);
-  //     });
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawermenu(),
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        // backgroundColor: Colors.orange,
-        title: Text('ChatApp'),
-        // actions: [
-        //   DropdownButton(
-        //     icon: Icon(
-        //       Icons.more_vert,
-        //       color: Colors.black,
-        //     ),
-        //     items: [
-        //       DropdownMenuItem(
-        //         child: Container(
-        //           child: Column(
-        //             children: [
-        //               Row(
-        //                 children: [
-        //                   Icon(Icons.exit_to_app),
-        //                   SizedBox(width: 5),
-        //                   Text('Logout'),
-        //                 ],
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //         value: 'logout',
-        //       ),
-        //     ],
-        //     onChanged: (itemIdentifier) {
-        //       if (itemIdentifier == 'logout') {
-        //         FirebaseAuth.instance.signOut();
-        //         print('successfully logout from chatscreen!');
-        //       }
-        //     },
-        //   ),
-        // ],
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              child: Messages(),
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+        return Scaffold(
+          drawer: Drawermenu(),
+          backgroundColor: Colors.grey[200],
+          appBar: AppBar(
+            // backgroundColor: Colors.orange,
+            title: Text('Chat Room'),
+          ),
+          body: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Messages(),
+                ),
+                NewMessage(),
+              ],
             ),
-            NewMessage(),
-          ],
-        ),
-      ),
+          ),
+        );
+        } else return AuthScreen();
+      }
     );
   }
 }
