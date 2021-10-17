@@ -34,7 +34,6 @@ class _AuthFormState extends State<AuthForm> {
       return;
     }
     if (isValid) {
-      print(_userImage);
       _formkey.currentState!.save();
       widget.submitform(
         _userEmail.trim(),

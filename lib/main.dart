@@ -1,5 +1,6 @@
 import 'package:chatapp/screens/authScreen.dart';
 import 'package:chatapp/screens/chatScreen.dart';
+import 'package:chatapp/screens/editProfileScreen.dart';
 import 'package:chatapp/screens/messageScreen.dart';
 // import 'package:chatapp/screens/personalChatScreen.dart';
 import 'package:chatapp/screens/profile.dart';
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
                   '/messageScreen': (context) => MessageScreen(),
                   '/profileScreen': (context) => ProfilePage(),
                   '/authScreen': (context) => AuthScreen(),
-                  '/tabsScreen' : (context) => TabsScreen()
+                  '/tabsScreen' : (context) => TabsScreen(),
+                  '/editScreen' : (context) => EditProfilePage(),
+
                 }
                 );
       

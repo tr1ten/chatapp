@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: IconButton(
                             icon: Icon(Icons.edit),
                             color: Colors.white,
-                            onPressed: () {},
+                            onPressed: () => Navigator.of(context).pushReplacementNamed('/editScreen'),
                             iconSize: 20,
                           ),
                         ),
