@@ -15,7 +15,7 @@ class PersonalChatScreen extends StatelessWidget {
         backgroundColor: Colors.orange,
         leading: BackButton(
           onPressed: () =>
-              Navigator.of(context).pushReplacementNamed('/messageScreen'),
+              Navigator.of(context).pushReplacementNamed('/tabsScreen'),
         ),
         title: Text(user.get('username')),
       ),
