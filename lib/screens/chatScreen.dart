@@ -30,40 +30,40 @@ class _ChatScreenState extends State<ChatScreen> {
       drawer: Drawermenu(),
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        // backgroundColor: Colors.orange,
         title: Text('ChatApp'),
-        actions: [
-          DropdownButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.black,
-            ),
-            items: [
-              DropdownMenuItem(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.exit_to_app),
-                          SizedBox(width: 5),
-                          Text('Logout'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                value: 'logout',
-              ),
-            ],
-            onChanged: (itemIdentifier) {
-              if (itemIdentifier == 'logout') {
-                FirebaseAuth.instance.signOut();
-                print('successfully logout from chatscreen!');
-              }
-            },
-          ),
-        ],
+        // actions: [
+        //   DropdownButton(
+        //     icon: Icon(
+        //       Icons.more_vert,
+        //       color: Colors.black,
+        //     ),
+        //     items: [
+        //       DropdownMenuItem(
+        //         child: Container(
+        //           child: Column(
+        //             children: [
+        //               Row(
+        //                 children: [
+        //                   Icon(Icons.exit_to_app),
+        //                   SizedBox(width: 5),
+        //                   Text('Logout'),
+        //                 ],
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         value: 'logout',
+        //       ),
+        //     ],
+        //     onChanged: (itemIdentifier) {
+        //       if (itemIdentifier == 'logout') {
+        //         FirebaseAuth.instance.signOut();
+        //         print('successfully logout from chatscreen!');
+        //       }
+        //     },
+        //   ),
+        // ],
       ),
       body: Container(
         child: Column(

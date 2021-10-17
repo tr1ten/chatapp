@@ -52,111 +52,114 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        margin: EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-                key: _formkey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (!_islogin) ImagePick(_pickedImage),
-                    TextFormField(
-                      key: ValueKey('email'),
-                      validator: (value) {
-                        if (value!.isEmpty || !value.contains('@')) {
-                          return 'Enter a valid email address';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Email Address'),
-                      keyboardType: TextInputType.emailAddress,
-                      onSaved: (value) {
-                        _userEmail = value!;
-                      },
-                    ),
-                    if (!_islogin)
+      child: Opacity(
+        opacity: 0.8,
+        child: Card(
+          margin: EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                  key: _formkey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (!_islogin) ImagePick(_pickedImage),
                       TextFormField(
-                        key: ValueKey('username'),
+                        key: ValueKey('email'),
                         validator: (value) {
-                          if (value!.isEmpty || value.length < 4) {
-                            return 'Enter a username with atleast 4 characters';
+                          if (value!.isEmpty || !value.contains('@')) {
+                            return 'Enter a valid email address';
                           }
                           return null;
                         },
-                        decoration: InputDecoration(labelText: 'User Name'),
-                        onSaved: (value) {
-                          _userName = value!;
-                        },
-                      ),
-                    TextFormField(
-                      key: ValueKey('password'),
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 7) {
-                          return 'Enter a password with atleast 7 characters';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                      onSaved: (value) {
-                        _userPass = value!;
-                      },
-                    ),
-                    if (!_islogin)
-                      TextFormField(
-                        key: ValueKey('college'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter a valid college name';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(labelText: 'College'),
+                        decoration: InputDecoration(labelText: 'Email Address'),
                         keyboardType: TextInputType.emailAddress,
                         onSaved: (value) {
-                          _userCollege = value!;
+                          _userEmail = value!;
                         },
                       ),
-                    if (!_islogin)
-                      TextFormField(
-                        key: ValueKey('branch'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter a valid branch name';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            labelText: 'Branch', hintText: 'CSE'),
-                        keyboardType: TextInputType.emailAddress,
-                        onSaved: (value) {
-                          _userBranch = value!;
-                        },
-                      ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    if (widget._isloading) CircularProgressIndicator(),
-                    if (!widget._isloading)
-                      ElevatedButton(
-                        onPressed: _trySubmit,
-                        child: Text(_islogin ? 'Login' : 'SignUp'),
-                      ),
-                    if (!widget._isloading)
-                      TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _islogin = !_islogin;
-                            });
+                      if (!_islogin)
+                        TextFormField(
+                          key: ValueKey('username'),
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 4) {
+                              return 'Enter a username with atleast 4 characters';
+                            }
+                            return null;
                           },
-                          child: Text(_islogin
-                              ? 'Create a new account'
-                              : 'I already have an account')),
-                  ],
-                )),
+                          decoration: InputDecoration(labelText: 'User Name'),
+                          onSaved: (value) {
+                            _userName = value!;
+                          },
+                        ),
+                      TextFormField(
+                        key: ValueKey('password'),
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 7) {
+                            return 'Enter a password with atleast 7 characters';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(labelText: 'Password'),
+                        obscureText: true,
+                        onSaved: (value) {
+                          _userPass = value!;
+                        },
+                      ),
+                      if (!_islogin)
+                        TextFormField(
+                          key: ValueKey('college'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter a valid college name';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(labelText: 'College'),
+                          keyboardType: TextInputType.emailAddress,
+                          onSaved: (value) {
+                            _userCollege = value!;
+                          },
+                        ),
+                      if (!_islogin)
+                        TextFormField(
+                          key: ValueKey('branch'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter a valid branch name';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              labelText: 'Branch', hintText: 'CSE'),
+                          keyboardType: TextInputType.emailAddress,
+                          onSaved: (value) {
+                            _userBranch = value!;
+                          },
+                        ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      if (widget._isloading) CircularProgressIndicator(),
+                      if (!widget._isloading)
+                        ElevatedButton(
+                          onPressed: _trySubmit,
+                          child: Text(_islogin ? 'Login' : 'SignUp'),
+                        ),
+                      if (!widget._isloading)
+                        TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _islogin = !_islogin;
+                              });
+                            },
+                            child: Text(_islogin
+                                ? 'Create a new account'
+                                : 'I already have an account')),
+                    ],
+                  )),
+            ),
           ),
         ),
       ),

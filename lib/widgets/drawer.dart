@@ -1,5 +1,5 @@
+import 'package:chatapp/utils/authService.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Drawermenu extends StatelessWidget {
   @override
@@ -9,13 +9,13 @@ class Drawermenu extends StatelessWidget {
         DrawerHeader(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: <Color>[Colors.deepOrange, Colors.orangeAccent])),
+                    colors: <Color>[Colors.grey.shade50, Colors.cyanAccent])),
             child: CircleAvatar()),
         ListTile(
           title: Text("Profile"),
           // contentPadding: EdgeInsets.all(10),
           onTap: () =>
-              {Navigator.of(context).pushReplacementNamed('/profileScreen')},
+              {Navigator.of(context).pushNamed('/profileScreen')},
         ),
         Divider(
           thickness: 2,
@@ -31,7 +31,9 @@ class Drawermenu extends StatelessWidget {
         ),
         ListTile(
           title: Text("Messages"),
-          onTap: () => {Navigator.of(context).pushNamed('/messageScreen')},
+          onTap: () => 
+            Navigator.of(context).pushReplacementNamed('/tabsScreen')
+          ,
         ),
         Divider(
           thickness: 2,
@@ -45,11 +47,12 @@ class Drawermenu extends StatelessWidget {
         ),
         ListTile(
           title: Text("Log out"),
-          onTap: () => {FirebaseAuth.instance.signOut()},
+          onTap: () => AuthService().logOut(context),
           // contentPadding: EdgeInsets.all(10),
         ),
         // Divider(thickness: 2,),
-      ]),
+      ],
+      ),
     );
   }
 }

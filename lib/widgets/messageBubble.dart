@@ -74,7 +74,7 @@ class MessageBubble extends StatelessWidget {
               radius: 23,
             ),
             left: 120,
-            top: -10,
+            top: -9,
           )
       ],
       // overflow: Overflow.visible,
