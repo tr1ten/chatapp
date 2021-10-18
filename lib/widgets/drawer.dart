@@ -1,4 +1,3 @@
-
 import 'package:chatapp/utils/authService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +28,9 @@ class _DrawermenuState extends State<Drawermenu> {
 
   @override
   Widget build(BuildContext context) {
+    // const Image img = NetworkImage('');
+    final image = NetworkImage(userData?['imageUrl'] ??
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTguqThAF5hdU3HGdSEuLRdnRJx6HmoROJnRllMwZ0DPXm9U4U4Jh4n5Z2NL0zfAtUAaPs&usqp=CAU");
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -37,9 +39,11 @@ class _DrawermenuState extends State<Drawermenu> {
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                       colors: <Color>[Colors.grey.shade50, Colors.cyanAccent])),
-              child: CircleAvatar(
-                foregroundImage: NetworkImage(userData?['imageUrl'] ??
-                    "https://www.pngmagic.com/product_images/solid-light-blue-background.jpg"),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: CircleAvatar(
+                  foregroundImage: image,
+                ),
               )),
           ListTile(
             title: Text("Profile"),

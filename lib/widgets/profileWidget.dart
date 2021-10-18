@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:chatapp/widgets/imagePicker.dart';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -34,7 +31,7 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
+    final image = NetworkImage('https://images.unsplash.com/photo-1614680376408-81e91ffe3db7?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2hhdHNhcHAlMjBkcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
 
     return ClipOval(
       child: Material(
@@ -44,7 +41,7 @@ class ProfileWidget extends StatelessWidget {
           fit: BoxFit.cover,
           width: 128,
           height: 128,
-          child: InkWell(onTap: onClicked),
+          child: InkWell(),
         ),
       ),
     );
@@ -57,7 +54,7 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 2,
           child: IconButton(
-            onPressed: () {}, 
+            onPressed: isEdit? (){} : onClicked , 
             icon: Icon(isEdit ? Icons.add_a_photo : Icons.edit,size: 20,),
             color: Colors.white,
           ),
@@ -71,6 +68,8 @@ class ProfileWidget extends StatelessWidget {
   }) =>
       ClipOval(
         child: Container(
+          height: 45,
+          width: 45,
           padding: EdgeInsets.all(all),
           color: color,
           child: child,
