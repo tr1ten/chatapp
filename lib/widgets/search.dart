@@ -1,7 +1,7 @@
 import 'package:chatapp/screens/personalChatScreen.dart';
+import 'package:chatapp/screens/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Searchoption extends StatefulWidget {
@@ -24,7 +24,10 @@ class _SearchoptionState extends State<Searchoption> {
     super.initState();
     _collectionRef.get().then((value) {
       querySnapshot = value;
-      allData = querySnapshot.docs.where((element) => element.id != FirebaseAuth.instance.currentUser!.uid).toList();
+      allData = querySnapshot.docs
+          .where(
+              (element) => element.id != FirebaseAuth.instance.currentUser!.uid)
+          .toList();
     });
     // Get data from docs and convert map to List
   }
@@ -73,9 +76,7 @@ class _SearchoptionState extends State<Searchoption> {
               child: ListTile(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PersonalChatScreen(
-                      user: user,
-                    );
+                    return ProfilePage(userId: user.id);
                   }));
                 },
                 leading: CircleAvatar(

@@ -31,7 +31,7 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage('https://images.unsplash.com/photo-1614680376408-81e91ffe3db7?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2hhdHNhcHAlMjBkcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
+    final image = NetworkImage(imagePath);
 
     return ClipOval(
       child: Material(
@@ -54,8 +54,11 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 2,
           child: IconButton(
-            onPressed: isEdit? (){} : onClicked , 
-            icon: Icon(isEdit ? Icons.add_a_photo : Icons.edit,size: 20,),
+            onPressed: isEdit ? () {} : onClicked,
+            icon: Icon(
+              isEdit ? Icons.add_a_photo : Icons.edit,
+              size: 20,
+            ),
             color: Colors.white,
           ),
         ),

@@ -1,5 +1,4 @@
 import 'package:chatapp/screens/authScreen.dart';
-import 'package:chatapp/screens/chatScreen.dart';
 import 'package:chatapp/screens/messageScreen.dart';
 import 'package:chatapp/widgets/drawer.dart';
 import 'package:chatapp/widgets/search.dart';
@@ -14,33 +13,39 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
-    return  StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if(snapshot.hasData){
-        return DefaultTabController(length: 2, 
-            child: Scaffold(
-              drawer: Drawermenu(),
-              appBar: AppBar(
-              title: Text('ChatApp'),
-              bottom: TabBar(tabs: [
-                Tab(icon: Icon(Icons.message),
-                text: 'Messages',),
-                Tab(
-                  icon: Icon(Icons.search),
-                  text: 'Search',
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                drawer: DrawerMenu(),
+                appBar: AppBar(
+                  title: Text('ChatApp'),
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(
+                        icon: Icon(Icons.message),
+                        text: 'Messages',
+                      ),
+                      Tab(
+                        icon: Icon(Icons.search),
+                        text: 'Search',
+                      ),
+                    ],
+                  ),
                 ),
-              ],),
-            ),
-            body: TabBarView(children: [
-              MessageScreen(),
-              Searchoption(),
-        
-            ],),
-            ),
+                body: TabBarView(
+                  children: [
+                    MessageScreen(),
+                    Searchoption(),
+                  ],
+                ),
+              ),
             );
-        } else return AuthScreen();
-      }
-    );
+          } else
+            return AuthScreen();
+        });
   }
 }

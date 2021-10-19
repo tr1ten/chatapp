@@ -51,6 +51,7 @@ class _AuthScreenState extends State<AuthScreen> {
           'imageUrl': url,
           'college': college,
           'branch': branch,
+          'Notes': [],
         });
       }
     } on FirebaseAuthException catch (error) {
@@ -85,70 +86,71 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       body: Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage("asserts/images/login.jpg"),fit: BoxFit.cover),
-                // gradient: LinearGradient(
-                //   colors: [
-                //     Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                //     Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-                //   ],
-                //   begin: Alignment.topLeft,
-                //   end: Alignment.bottomRight,
-                //   stops: [0, 1],
-                // ),
-              ),
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("asserts/images/login.jpg"),
+                  fit: BoxFit.cover),
+              // gradient: LinearGradient(
+              //   colors: [
+              //     Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
+              //     Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+              //   ],
+              //   begin: Alignment.topLeft,
+              //   end: Alignment.bottomRight,
+              //   stops: [0, 1],
+              // ),
             ),
-            SingleChildScrollView(
-              child: Container(
-                height: deviceSize.height,
-                width: deviceSize.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Flexible(
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 20.0),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                        transform: Matrix4.rotationZ(-8 * pi / 180)
-                          ..translate(-10.0),
-                        // ..translate(-10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.cyan.shade900,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 8,
-                              color: Colors.black26,
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                        ),
-                        child: Text(
-                          'ChatApp',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontFamily: 'Anton',
-                            fontWeight: FontWeight.normal,
-                          ),
+          ),
+          SingleChildScrollView(
+            child: Container(
+              height: deviceSize.height,
+              width: deviceSize.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 20.0),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
+                      transform: Matrix4.rotationZ(-8 * pi / 180)
+                        ..translate(-10.0),
+                      // ..translate(-10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.cyan.shade900,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 8,
+                            color: Colors.black26,
+                            offset: Offset(0, 2),
+                          )
+                        ],
+                      ),
+                      child: Text(
+                        'ChatApp',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontFamily: 'Anton',
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
-                    Flexible(
-                      flex: deviceSize.width > 600 ? 2 : 1,
-                      child: AuthForm(submitForm, _isloading),
-                    ),
-                  ],
-                ),
+                  ),
+                  Flexible(
+                    flex: deviceSize.width > 600 ? 2 : 1,
+                    child: AuthForm(submitForm, _isloading),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      
-    );    
+          ),
+        ],
+      ),
+    );
   }
 }
