@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class PersonalChatScreen extends StatelessWidget {
-  final QueryDocumentSnapshot<Object?> user;
+  final QueryDocumentSnapshot user;
+
   const PersonalChatScreen({Key? key, required this.user}) : super(key: key);
 
   @override

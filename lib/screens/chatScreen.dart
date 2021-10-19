@@ -16,33 +16,32 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if(snapshot.hasData){
-        return Scaffold(
-          drawer: Drawermenu(),
-          backgroundColor: Colors.grey[200],
-          appBar: AppBar(
-            // backgroundColor: Colors.orange,
-            title: Text('Chat Room'),
-          ),
-          body: Container(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Messages(),
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              drawer: DrawerMenu(),
+              backgroundColor: Colors.grey[200],
+              appBar: AppBar(
+                // backgroundColor: Colors.orange,
+                title: Text('Chat Room'),
+              ),
+              body: Container(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Messages(),
+                    ),
+                    NewMessage(),
+                  ],
                 ),
-                NewMessage(),
-              ],
-            ),
-          ),
-        );
-        } else return AuthScreen();
-      }
-    );
+              ),
+            );
+          } else
+            return AuthScreen();
+        });
   }
 }
