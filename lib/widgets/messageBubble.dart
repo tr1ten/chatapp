@@ -70,7 +70,8 @@ class MessageBubble extends StatelessWidget {
         if (!isMe)
           Positioned(
             child: CircleAvatar(
-              backgroundImage: NetworkImage(userImage),
+              backgroundImage: AssetImage("asserts/images/dp.png"),
+              foregroundImage: NetworkImage(userImage),
               radius: 23,
             ),
             left: 120,

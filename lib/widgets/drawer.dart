@@ -34,13 +34,17 @@ class DrawerMenu extends StatelessWidget {
                             snapshot.connectionState == ConnectionState.waiting
                                 ? CircularProgressIndicator()
                                 : CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage("asserts/images/dp.png"),
                                     foregroundImage: NetworkImage(
                                         snapshot.data!.get('imageUrl'))))),
                 ListTile(
                   title: Text("Profile"),
                   // contentPadding: EdgeInsets.all(10),
-                  onTap: () =>
-                      {Navigator.of(context).pushNamed('/profileScreen')},
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed('/profileScreen');
+                  },
                 ),
                 Divider(
                   thickness: 2,

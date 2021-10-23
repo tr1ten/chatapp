@@ -13,8 +13,9 @@ Future<void> downloadFile(
     },
     file: File('$dir/$fileName'),
     progress: ProgressImplementation(),
-    onDone: () => Scaffold.of(context)
-        .showSnackBar(SnackBar(content: Text('Saved file at $dir/$fileName'))),
+    onDone: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Saved file at $dir/$fileName'),
+    )),
     deleteOnCancel: true,
   );
 

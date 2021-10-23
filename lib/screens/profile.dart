@@ -22,6 +22,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   File? file;
   bool isLoading = false;
+  var _expanded = false;
 
   // List userNotes = [];
   // @override
@@ -46,8 +47,9 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       isLoading = true;
     });
-    Scaffold.of(context)
-        .showSnackBar(SnackBar(content: Text('Uploading document')));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Uploading file...'),
+    ));
     final path = result.files.single.path!;
 
     final note = File(path);
@@ -69,10 +71,27 @@ class _ProfilePageState extends State<ProfilePage> {
       ])
     });
     setState(() {});
-    print('completed adding notes');
     isLoading = false;
-    Scaffold.of(context)
-        .showSnackBar(SnackBar(content: Text('Succefully uploaded')));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Succesfully uploaded'),
+    ));
+  }
+
+  bool currentuser(AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
+    return snapshot.data?.id != FirebaseAuth.instance.currentUser!.uid;
+  }
+
+  Widget buildContainer(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+      ),
+      height: 200,
+      width: 300,
+      child: child,
+    );
   }
 
   @override
@@ -91,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
             return Scaffold(
               drawer: DrawerMenu(),
               appBar: AppBar(
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.cyan,
                 elevation: 0,
                 actions: [
                   IconButton(
@@ -104,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   future: _fetch(),
                   builder: (context, snapshot) {
                     return snapshot.connectionState == ConnectionState.waiting
-                        ? CircularProgressIndicator()
+                        ? Center(child: CircularProgressIndicator())
                         : ListView(
                             physics: BouncingScrollPhysics(),
                             children: [
@@ -135,20 +154,22 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               const SizedBox(height: 10),
                               Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: snapshot.data?.id !=
-                                          FirebaseAuth.instance.currentUser!.uid
-                                      ? StreamBuilder<QuerySnapshot>(
-                                          stream: FirebaseFirestore.instance
-                                              .collection('users')
-                                              .snapshots(),
-                                          builder: (context, snapshot) {
-                                            final user = snapshot.data!.docs
-                                                .firstWhere((element) =>
-                                                    element.id ==
-                                                    widget.userId);
-                                            return RaisedButton(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: currentuser(snapshot)
+                                    ? StreamBuilder<QuerySnapshot>(
+                                        stream: FirebaseFirestore.instance
+                                            .collection('users')
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircleAvatar();
+                                          }
+                                          final user = snapshot.data!.docs
+                                              .firstWhere((element) =>
+                                                  element.id == widget.userId);
+                                          return ElevatedButton(
                                               onPressed: () {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
@@ -158,25 +179,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 }));
                                               },
                                               child: Text('Send Message'),
-                                              color: Colors.cyan.shade200,
-                                            );
-                                          })
-                                      : Text('Your Profile')),
-                              const SizedBox(height: 15),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 15),
-                                  Text(
-                                    'College name -',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(snapshot.data!.get('college')),
-                                ],
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.cyan.shade200)
+                                              // color: Colors.cyan.shade200,
+                                              );
+                                        })
+                                    : SizedBox(),
                               ),
                               const SizedBox(
-                                height: 15,
+                                height: 8,
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 16),
@@ -184,39 +195,68 @@ class _ProfilePageState extends State<ProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'About:',
+                                      "About:",
                                       style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700),
+                                          color: Colors.blueGrey,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      'Hello My name is .......................................',
+                                      'My name is Alice and I am  a freelance mobile app developper.\n'
+                                      'if you need any mobile app for your company then contact me for more informations',
                                       style: TextStyle(
-                                          fontSize: 16, color: Colors.black87),
+                                        fontSize: 17.0,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.grey.shade700,
+                                        letterSpacing: 2.0,
+                                      ),
                                     ),
                                     const SizedBox(height: 20),
-                                    Text('Uploaded Notes',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700)),
+                                    Text(
+                                      "Uploaded Notes:",
+                                      style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                     const SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        ShowNotes(widget: widget),
-                                        const SizedBox(width: 5),
-                                        isLoading
-                                            ? CircularProgressIndicator()
-                                            : FlatButton(
-                                                onPressed: () =>
-                                                    selectFile(context),
-                                                child: Text('Add notes'),
-                                                color: Colors.cyan,
+                                    Card(
+                                      child: ListTile(
+                                        title: Text('Notes'),
+                                        trailing: IconButton(
+                                          icon: Icon(_expanded
+                                              ? Icons.expand_less
+                                              : Icons.expand_more),
+                                          onPressed: () {
+                                            setState(() {
+                                              _expanded = !_expanded;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    AnimatedContainer(
+                                        duration: Duration(milliseconds: 300),
+                                        height: _expanded ? 200 : 0,
+                                        width: double.infinity,
+                                        child: ShowNotes(widget: widget)),
+                                    if (!currentuser(snapshot))
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.cyan),
+                                        onPressed: () => selectFile(context),
+                                        child: isLoading
+                                            ? CircularProgressIndicator(
+                                                color: Colors.black,
                                               )
-                                      ],
-                                    )
+                                            : Text('Add notes'),
+                                      ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           );
                   }),
@@ -235,6 +275,22 @@ class ShowNotes extends StatelessWidget {
 
   final ProfilePage widget;
 
+  Widget buildContainer(BuildContext context, Widget child,
+      AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
+    return Container(
+      decoration: BoxDecoration(
+        // border: Border.all(color: Colors.grey),
+        // borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+      ),
+      child: child,
+    );
+  }
+
+  bool currentuser(AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
+    return snapshot.data!.id == FirebaseAuth.instance.currentUser!.uid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -244,28 +300,30 @@ class ShowNotes extends StatelessWidget {
             .snapshots(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return buildContainer(
+                context, Center(child: CircularProgressIndicator()), snapshot);
           } else {
-            final userNotes = snapshot.data?.get('Notes');
-            return (userNotes.isEmpty)
-                ? Text('add your notes')
-                : Expanded(
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: userNotes.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () async {
-                              print('startingggg....');
-                              downloadFile(
-                                  userNotes[index]['url'],
-                                  userNotes[index]['filename'],
-                                  (await getExternalStorageDirectory())!.path,
-                                  context);
-                            },
-                            trailing: IconButton(
-                                onPressed: () async {
+            final userNotes = snapshot.data!.get('Notes');
+            if (userNotes.isEmpty && currentuser(snapshot)) {
+              return buildContainer(context,
+                  Center(child: Text('Add your notes here!!')), snapshot);
+            }
+            if (userNotes.isEmpty && !currentuser(snapshot)) {
+              return buildContainer(context,
+                  Center(child: Text('No Notes Uploaded Yet')), snapshot);
+            } else
+              return buildContainer(
+                  context,
+                  ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: userNotes.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Column(
+                            children: [
+                              ListTile(
+                                onTap: () async {
                                   print('startingggg....');
                                   downloadFile(
                                       userNotes[index]['url'],
@@ -274,14 +332,30 @@ class ShowNotes extends StatelessWidget {
                                           .path,
                                       context);
                                 },
-                                icon: Icon(Icons.download)),
-                            leading: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.52,
-                                child:
-                                    NoteW(text: userNotes[index]['filename'])),
-                          );
-                        }),
-                  );
+                                trailing: IconButton(
+                                    onPressed: () async {
+                                      downloadFile(
+                                          userNotes[index]['url'],
+                                          userNotes[index]['filename'],
+                                          (await getExternalStorageDirectory())!
+                                              .path,
+                                          context);
+                                    },
+                                    icon: Icon(Icons.download)),
+                                title: Text(userNotes[index]['filename']),
+                                // leading: SizedBox(
+                                //     width: MediaQuery.of(context).size.width * 0.45,
+                                //     child:
+                                //         NoteW(text: userNotes[index]['filename'])),
+                              ),
+                              // Divider(
+                              //   thickness: 2,
+                              // ),
+                            ],
+                          ),
+                        );
+                      }),
+                  snapshot);
           }
         });
   }
@@ -295,7 +369,7 @@ class NoteW extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(border: Border.all(width: 0.5)),
+      // decoration: BoxDecoration(border: Border.all(width: 0.5)),
       height: 220,
       width: 220,
       child: Text(text),

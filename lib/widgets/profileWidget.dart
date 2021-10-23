@@ -16,50 +16,50 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
 
-    return Center(
-      child: Stack(
-        children: [
-          buildImage(),
-          Positioned(
-            bottom: 0,
-            right: 4,
-            child: buildEditIcon(color),
-          ),
-        ],
-      ),
+    return Stack(
+      children: [
+        buildImage(),
+        buildEditIcon(color),
+      ],
     );
   }
 
   Widget buildImage() {
     final image = NetworkImage(imagePath);
 
-    return ClipOval(
-      child: Material(
-        color: Colors.cyan,
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 128,
-          height: 128,
-          child: InkWell(),
+    return Center(
+      child: ClipOval(
+        child: Material(
+          color: Colors.cyan,
+          child: Ink.image(
+            image: image,
+            fit: BoxFit.cover,
+            width: 128,
+            height: 128,
+            child: InkWell(),
+          ),
         ),
       ),
     );
   }
 
-  Widget buildEditIcon(Color color) => buildCircle(
-        color: Colors.white,
-        all: 3,
+  Widget buildEditIcon(Color color) => Positioned(
+        bottom: 0,
+        left: 200,
         child: buildCircle(
-          color: color,
-          all: 2,
-          child: IconButton(
-            onPressed: isEdit ? () {} : onClicked,
-            icon: Icon(
-              isEdit ? Icons.add_a_photo : Icons.edit,
-              size: 20,
+          color: Colors.white,
+          all: 3,
+          child: buildCircle(
+            color: color,
+            all: 2,
+            child: IconButton(
+              onPressed: isEdit ? () {} : onClicked,
+              icon: Icon(
+                isEdit ? Icons.add_a_photo : Icons.edit,
+                size: 20,
+              ),
+              color: Colors.white,
             ),
-            color: Colors.white,
           ),
         ),
       );

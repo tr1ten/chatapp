@@ -54,10 +54,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onChanged: (about) {},
             ),
             const SizedBox(height: 24),
-            FlatButton(
+            ElevatedButton(
               onPressed: () {},
               child: Text('Save'),
-              color: Colors.cyan,
             )
           ],
         ),

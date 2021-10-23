@@ -38,6 +38,7 @@ class MessageScreen extends StatelessWidget {
                   },
                   leading: CircleAvatar(
                     radius: 30,
+                    backgroundImage: AssetImage("asserts/images/dp.png"),
                     foregroundImage: NetworkImage(user.get('imageUrl')),
                   ),
                   title: Text(
