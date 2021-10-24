@@ -47,6 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .doc(authResult.user!.uid)
             .set({
           'username': username,
+          'about': 'I am $username ...',
           'email': email,
           'imageUrl': url,
           'college': college,

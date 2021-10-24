@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chatapp/screens/authScreen.dart';
 import 'package:chatapp/screens/personalChatScreen.dart';
+import 'package:chatapp/theme.dart';
 import 'package:chatapp/utils/downladfile.dart';
 import 'package:chatapp/widgets/drawer.dart';
 import 'package:chatapp/widgets/profileWidget.dart';
@@ -11,6 +12,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   final userId;
@@ -94,6 +96,12 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void gotoChat(context, DocumentSnapshot user) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PersonalChatScreen(user: user);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<DocumentSnapshot> _fetch() async {
@@ -113,9 +121,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 backgroundColor: Colors.cyan,
                 elevation: 0,
                 actions: [
-                  IconButton(
-                    icon: Icon(CupertinoIcons.moon_stars),
-                    onPressed: () {},
+                  Consumer<MyThemeNotify>(
+                    builder: (context, value, child) {
+                      return IconButton(
+                        icon: Icon(value.isDark
+                            ? CupertinoIcons.moon_stars_fill
+                            : CupertinoIcons.moon_stars),
+                        onPressed: () {
+                          value.toggleDark();
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
@@ -157,33 +173,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 padding:
                                     const EdgeInsets.only(left: 10, right: 10),
                                 child: currentuser(snapshot)
-                                    ? StreamBuilder<QuerySnapshot>(
-                                        stream: FirebaseFirestore.instance
-                                            .collection('users')
-                                            .snapshots(),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return CircleAvatar();
-                                          }
-                                          final user = snapshot.data!.docs
-                                              .firstWhere((element) =>
-                                                  element.id == widget.userId);
-                                          return ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return PersonalChatScreen(
-                                                      user: user);
-                                                }));
-                                              },
-                                              child: Text('Send Message'),
-                                              style: ElevatedButton.styleFrom(
-                                                  primary: Colors.cyan.shade200)
-                                              // color: Colors.cyan.shade200,
-                                              );
-                                        })
+                                    ? ElevatedButton(
+                                        onPressed: () =>
+                                            gotoChat(context, snapshot.data!),
+                                        child: Text('Send Message'),
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.cyan.shade200))
                                     : SizedBox(),
                               ),
                               const SizedBox(
@@ -203,8 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      'My name is Alice and I am  a freelance mobile app developper.\n'
-                                      'if you need any mobile app for your company then contact me for more informations',
+                                      snapshot.data!.get('about'),
                                       style: TextStyle(
                                         fontSize: 17.0,
                                         fontStyle: FontStyle.italic,

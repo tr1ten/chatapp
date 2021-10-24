@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PMessages extends StatelessWidget {
-  final QueryDocumentSnapshot<Object?> toUser;
+  final DocumentSnapshot<Object?> toUser;
 
   const PMessages({Key? key, required this.toUser}) : super(key: key);
 

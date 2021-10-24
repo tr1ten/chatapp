@@ -19,7 +19,7 @@ Future<void> downloadFile(
     deleteOnCancel: true,
   );
 
-  final core = await Flowder.download(url, downloaderUtils);
+  await Flowder.download(url, downloaderUtils);
 
   // print('here your donwload file $filePath');
 }

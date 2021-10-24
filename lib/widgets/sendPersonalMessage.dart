@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PNewMessage extends StatefulWidget {
-  final QueryDocumentSnapshot<Object?> userdoc;
+  final DocumentSnapshot<Object?> userdoc;
 
   const PNewMessage({Key? key, required this.userdoc}) : super(key: key);
   @override

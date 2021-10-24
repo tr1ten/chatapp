@@ -30,14 +30,16 @@ class DrawerMenu extends StatelessWidget {
                     ])),
                     child: FittedBox(
                         fit: BoxFit.contain,
-                        child:
-                            snapshot.connectionState == ConnectionState.waiting
-                                ? CircularProgressIndicator()
-                                : CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage("asserts/images/dp.png"),
-                                    foregroundImage: NetworkImage(
-                                        snapshot.data!.get('imageUrl'))))),
+                        child: snapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? CircleAvatar(
+                                backgroundColor: Theme.of(context).primaryColor,
+                              )
+                            : CircleAvatar(
+                                backgroundImage:
+                                    AssetImage("asserts/images/dp.png"),
+                                foregroundImage: NetworkImage(
+                                    snapshot.data!.get('imageUrl'))))),
                 ListTile(
                   title: Text("Profile"),
                   // contentPadding: EdgeInsets.all(10),
